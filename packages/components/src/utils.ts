@@ -58,6 +58,7 @@ export const availableDependencies = [
     '@dqbd/tiktoken',
     '@getzep/zep-js',
     '@gomomento/sdk',
+    'franc-min',
     '@gomomento/sdk-core',
     '@google-ai/generativelanguage',
     '@google/generative-ai',
@@ -1666,7 +1667,7 @@ export const executeJavaScriptCode = async (
             require: {
                 external: {
                     modules: deps,
-                    transitive: false // Prevent transitive dependencies
+                    transitive: true // Prevent transitive dependencies
                 },
                 builtin: builtinDeps,
                 mock: secureWrappers // Replace HTTP libraries with secure wrappers
