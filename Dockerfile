@@ -1,5 +1,5 @@
 # Build local monorepo image
-# docker build --no-cache -t  flowise .
+# docker build --no-cache -t flowise .
 
 # Run image
 # docker run -d -p 3000:3000 flowise
@@ -30,9 +30,14 @@ WORKDIR /usr/src/flowise
 # Copy app source
 COPY . .
 
-# Install dependencies and build
-RUN pnpm install && \
-    pnpm build
+# Install dependencies (deterministic)
+RUN pnpm install --frozen-lockfile
+
+# Add extra deps only inside the image (do not modify package.json / lockfile)
+RUN pnpm --filter flowise-components add franc-min --no-save
+
+# Build
+RUN pnpm build
 
 # Give the node user ownership of the application files
 RUN chown -R node:node .
